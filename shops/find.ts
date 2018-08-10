@@ -18,14 +18,12 @@ const find = middy(async (event: APIGatewayEvent, context: Context, cb: Callback
   }
 
   const shop = findShop(id, availableShops)
-  if (!!shop) {
+  if (shop) {
     return ok(shop)
   }
 
   return notFound({id})
 })
-
-
 
 find
   .use(httpHeaderNormalizer())
