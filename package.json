@@ -24,6 +24,7 @@
     "nock": "9.4.0",
     "nyc": "12.0.2",
     "serverless": "^1.30.0",
+    "serverless-plugin-canary-deployments": "^0.4.2",
     "serverless-domain-manager": "^2.6.0",
     "serverless-offline": "^3.25.7",
     "serverless-pseudo-parameters": "^2.1.0",

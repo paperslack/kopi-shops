@@ -6,6 +6,8 @@ plugins:
   - serverless-pseudo-parameters
   - serverless-domain-manager
   - serverless-offline
+  - serverless-plugin-canary-deployments
+
 provider:
   name: aws
   runtime: nodejs8.10
@@ -13,16 +15,24 @@ provider:
 
 custom:
   stage: ${opt:stage, 'dev'}
-  domains:
-    dev:  api-dev.simplepipeline.xyz
-    prod: api.simplepipeline.xyz
-  certificates: 
-    dev: arn:aws:acm:us-east-1:275307759108:certificate/d2e595ec-1d14-4363-a18b-834e21350cf3
-    prod: arn:aws:acm:us-east-1:275307759108:certificate/e18e344d-1161-4ecf-b39a-eb316497dd82
+  dev:
+    domain: api-dev.simplepipeline.xyz
+    certificate: arn:aws:acm:us-east-1:275307759108:certificate/d2e595ec-1d14-4363-a18b-834e21350cf3
+    deploymentSettings:
+      type: AllAtOnce
+      alias: AllAtOnceDev
+
+  prod:
+    domain: api.simplepipeline.xyz
+    certificate: arn:aws:acm:us-east-1:275307759108:certificate/e18e344d-1161-4ecf-b39a-eb316497dd82
+    deploymentSettings:
+      type: Linear10PercentEvery1Minute
+      alias: Live10pctPerMinuteProd
+
   customDomain:
-    domainName: ${self:custom.domains.${self:custom.stage}}
+    domainName: ${self:custom.${self:custom.stage}.domain}
+    certificateArn: ${self:custom.${self:custom.stage}.certificate}
     createRoute53Record: true
-    certificateArn: ${self:custom.certificates.${self:custom.stage}}
     basePath: shops
 
 functions:
@@ -34,3 +44,6 @@ functions:
           path: /
           cors: true
           private: false
+    deploymentSettings:
+      type: ${self:custom.${self:custom.stage}.deploymentSettings.type}
+      alias: ${self:custom.${self:custom.stage}.deploymentSettings.alias}

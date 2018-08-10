@@ -1,21 +1,10 @@
-# Javascript Node CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-javascript/ for more details
-#
-
 # -----------------------------------------------------------
 # Shared config definition
 # -----------------------------------------------------------
 
-sharedEnvironment: &sharedEnvironment
-  environment:
-    APP_NAME: KOPI
-    SERVICE_NAME: KOPI-SHOPS
-
 sharedConfig: &sharedConfig
   docker:
     - image: circleci/node:10.8.0
-  <<: *sharedEnvironment
 
 # -----------------------------------------------------------
 # Jobs definition
