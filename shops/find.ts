@@ -1,13 +1,12 @@
 import { APIGatewayEvent, Callback, Context } from 'aws-lambda'
 import middy = require('middy')
-import { ok, internalError } from '@kopi/commons'
+import { ok, internalError, notFound } from '@kopi/commons'
 import { eventLogger, httpErrorHandler } from '@kopi/middy-middleware';
 const { httpHeaderNormalizer, httpEventNormalizer } = require('middy/middlewares')
 
 import { getFeatureFlags, filterTestData } from './helpers'
 import { shops, findShop, Shop } from './shops'
 import { logger } from './log'
-import { notFound } from '../../kopi-commons/src/http';
 
 const find = middy(async (event: APIGatewayEvent, context: Context, cb: Callback) => {
   const { test_data } = getFeatureFlags(event)

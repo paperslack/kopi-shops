@@ -1,11 +1,11 @@
 import { TestData } from './helpers/definitions'
 const { find, propEq } = require('ramda')
 
-interface Links {
+export interface Links {
   web: string;
 }
 
-interface Attributes {
+export interface Attributes {
   address: string;
   name: string;
 
@@ -24,7 +24,7 @@ interface Attributes {
   rating_formatted_count?: string;
 }
 
-interface Shop extends TestData {
+export interface Shop extends TestData {
   id: number;
   test: boolean;
   type?: string;
