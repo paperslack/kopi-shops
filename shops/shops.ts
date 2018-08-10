@@ -1,3 +1,6 @@
+import { TestData } from './helpers/definitions'
+const { find, propEq } = require('ramda')
+
 interface Links {
   web: string;
 }
@@ -21,7 +24,7 @@ interface Attributes {
   rating_formatted_count?: string;
 }
 
-interface Shop {
+interface Shop extends TestData {
   id: number;
   test: boolean;
   type?: string;
@@ -30,7 +33,7 @@ interface Shop {
   links?: Links;
 }
 
-const shops: Shop[] = [
+export const shops: Shop[] = [
   {
     id: 1,
     attributes: {
@@ -65,4 +68,4 @@ const shops: Shop[] = [
   },
 ]
 
-export { shops }
+export const findShop = (id: string, shops: Shop[]): Shop => find(propEq('id', parseInt(id)), shops)
