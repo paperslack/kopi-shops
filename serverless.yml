@@ -1,0 +1,36 @@
+service:
+  name: kopi-shops-api
+
+plugins:
+  - serverless-webpack
+  - serverless-pseudo-parameters
+  - serverless-domain-manager
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: eu-west-1
+
+custom:
+  stage: ${opt:stage, 'dev'}
+  domains:
+    dev:  api-dev.simplepipeline.xyz
+    prod: api.simplepipeline.xyz
+  certificates: 
+    dev: arn:aws:acm:us-east-1:275307759108:certificate/d2e595ec-1d14-4363-a18b-834e21350cf3
+    prod: arn:aws:acm:us-east-1:275307759108:certificate/e18e344d-1161-4ecf-b39a-eb316497dd82
+  customDomain:
+    domainName: ${self:custom.domains.${self:custom.stage}}
+    createRoute53Record: true
+    certificateArn: ${self:custom.certificates.${self:custom.stage}}
+    basePath: shops
+
+functions:
+  find:
+    handler: shops/find.find
+    events:
+      - http:
+          method: get
+          path: /
+          cors: true
+          private: false
