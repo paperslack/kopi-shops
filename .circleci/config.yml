@@ -63,6 +63,7 @@ jobs:
       - run:
           name: deploy (dev)
           command: ./node_modules/.bin/serverless deploy -v -s prod
+          no_output_timeout: 20m
 
 # -----------------------------------------------------------
 # Workflows definition
