@@ -17,9 +17,6 @@ sharedConfig: &sharedConfig
     - image: circleci/node:10.8.0
   <<: *sharedEnvironment
 
-sharedContext: &sharedContext
-  context: kopi
-
 # -----------------------------------------------------------
 # Jobs definition
 # -----------------------------------------------------------
@@ -52,6 +49,27 @@ jobs:
           name: Unit test
           command: yarn test
 
+  deploy:
+    <<: *sharedConfig
+    steps:
+      - checkout
+      - run:
+          name: create domain name
+          command: ./node_modules/.bin/serverless create_domain --stage dev
+      - run:
+          name: deploy (dev)
+          command: ./node_modules/.bin/serverless deploy -v -s dev
+
+  deploy_prod:
+    <<: *sharedConfig
+    steps:
+      - checkout
+      - run:
+          name: create domain name
+          command: ./node_modules/.bin/serverless create_domain --stage dev
+      - run:
+          name: deploy (dev)
+          command: ./node_modules/.bin/serverless deploy -v -s dev
 
 # -----------------------------------------------------------
 # Workflows definition
@@ -71,3 +89,19 @@ workflows:
           filters:
             tags:
               only: /.*/
+
+      - deploy:
+          requires:
+            - test_unit
+          filters:
+            branches:
+              only: master
+      - deploy_prod:
+          requires:
+            - test_unit
+          filters:
+            tags:
+              only:
+                - /^v.*/
+            branches:
+              ignore: /.*/
