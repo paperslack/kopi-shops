@@ -70,10 +70,10 @@ jobs:
           at: .
       - run:
           name: create domain name
-          command: ./node_modules/.bin/serverless create_domain --stage dev
+          command: ./node_modules/.bin/serverless create_domain --stage prod
       - run:
           name: deploy (dev)
-          command: ./node_modules/.bin/serverless deploy -v -s dev
+          command: ./node_modules/.bin/serverless deploy -v -s prod
 
 # -----------------------------------------------------------
 # Workflows definition
