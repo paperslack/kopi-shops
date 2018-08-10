@@ -2,37 +2,72 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
+
+# -----------------------------------------------------------
+# Shared config definition
+# -----------------------------------------------------------
+
+sharedEnvironment: &sharedEnvironment
+  environment:
+    APP_NAME: KOPI
+    SERVICE_NAME: KOPI-SHOPS
+
+sharedConfig: &sharedConfig
+  docker:
+    - image: circleci/node:10.8.0
+  <<: *sharedEnvironment
+
+sharedContext: &sharedContext
+  context: kopi
+
+# -----------------------------------------------------------
+# Jobs definition
+# -----------------------------------------------------------
 version: 2
 jobs:
-  build:
-    docker:
-      # specify the version you desire here
-      - image: circleci/node:10.8.0
-
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # - image: circleci/mongo:3.4.4
-
-    working_directory: ~/repo
-
+  dependencies:
+    <<: *sharedConfig
     steps:
       - checkout
-
-      # Download and cache dependencies
       - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-
-      - run: yarn install
-
-      - save_cache:
+         key: node_modules-{{ checksum "package.json" }}
+      - run:
+          name: Install dependencies
+          command: yarn install
+      - persist_to_workspace:
+          root: .
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
+      - save_cache:
+          key: node_modules-{{ checksum "package.json" }}
+          paths:
+            - node_modules
+  test_unit:
+    <<: *sharedConfig
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Unit test
+          command: yarn test
 
-      # run tests!
-      - run: yarn test
 
+# -----------------------------------------------------------
+# Workflows definition
+# -----------------------------------------------------------
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - dependencies:
+          filters:
+            tags:
+              only: /.*/
+      # Tests
+      - test_unit:
+          requires:
+            - dependencies
+          filters:
+            tags:
+              only: /.*/
