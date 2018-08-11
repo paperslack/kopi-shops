@@ -27,6 +27,7 @@
     "serverless-domain-manager": "^2.6.0",
     "serverless-offline": "^3.25.7",
     "serverless-plugin-canary-deployments": "^0.4.2",
+    "serverless-plugin-common-excludes": "^2.2.0",
     "serverless-pseudo-parameters": "^2.1.0",
     "serverless-webpack": "4.0.0",
     "sinon": "^6.1.5",

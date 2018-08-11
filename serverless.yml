@@ -3,15 +3,11 @@ service:
 
 plugins:
   - serverless-webpack
+  - serverless-offline
   - serverless-pseudo-parameters
   - serverless-domain-manager
-  - serverless-offline
+  - serverless-plugin-common-excludes
   - serverless-plugin-canary-deployments
-
-provider:
-  name: aws
-  runtime: nodejs8.10
-  region: eu-west-1
 
 custom:
   stage: ${opt:stage, 'dev'}
@@ -35,6 +31,11 @@ custom:
     createRoute53Record: true
     basePath: shops
 
+provider:
+  name: aws
+  runtime: nodejs8.10
+  region: eu-west-1
+
 functions:
   find:
     handler: shops/find.find
@@ -47,3 +48,4 @@ functions:
     deploymentSettings:
       type: ${self:custom.${self:custom.stage}.deploymentSettings.type}
       alias: ${self:custom.${self:custom.stage}.deploymentSettings.alias}
+

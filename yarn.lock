@@ -5243,6 +5243,10 @@ serverless-plugin-canary-deployments@^0.4.2:
     lodash "^4.17.4"
     omit-empty "^0.4.1"
 
+serverless-plugin-common-excludes@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/serverless-plugin-common-excludes/-/serverless-plugin-common-excludes-2.2.0.tgz#3e755ba8351f06e90f6b81aebe928833e025e49e"
+
 serverless-pseudo-parameters@^2.1.0:
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/serverless-pseudo-parameters/-/serverless-pseudo-parameters-2.1.0.tgz#82b2478c4de5c718f68b8e5bb95895e14013bce4"

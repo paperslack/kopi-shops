@@ -8,7 +8,7 @@ import { getFeatureFlags, filterTestData } from './helpers'
 import { shops, findShop, Shop } from './shops'
 import { logger } from './log'
 
-const find = middy(async (event: APIGatewayEvent, context: Context, cb: Callback) => {
+const find = middy(async (event: APIGatewayEvent, context: Context) => {
   const { test_data } = getFeatureFlags(event)
   const { id } = event.queryStringParameters
   const availableShops = filterTestData(test_data, shops) as Shop[]
