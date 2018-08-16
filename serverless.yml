@@ -8,6 +8,7 @@ plugins:
   - serverless-domain-manager
   - serverless-plugin-common-excludes
   - serverless-plugin-canary-deployments
+  - serverless-plugin-tracing
 
 custom:
   stage: ${opt:stage, 'dev'}
@@ -34,7 +35,14 @@ custom:
 provider:
   name: aws
   runtime: nodejs8.10
+  tracing: true
   region: eu-west-1
+  iamRoleStatements:
+    - Effect: 'Allow'
+      Resource: "*"
+      Action:
+        - "xray:PutTraceSegments"
+        - "xray:PutTelemetryRecords"
 
 functions:
   find:

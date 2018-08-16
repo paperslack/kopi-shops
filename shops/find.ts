@@ -7,6 +7,7 @@ const { httpHeaderNormalizer, httpEventNormalizer } = require('middy/middlewares
 import { getFeatureFlags, filterTestData } from './helpers'
 import { shops, findShop, Shop } from './shops'
 import { logger } from './log'
+const AWSXRay = require('aws-xray-sdk')
 
 const find = middy(async (event: APIGatewayEvent, context: Context) => {
   const { test_data } = getFeatureFlags(event)
