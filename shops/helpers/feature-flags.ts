@@ -1,5 +1,5 @@
 import { APIGatewayEvent } from 'aws-lambda'
-import { reduce, split } from 'rambda'
+import { reduce, split } from 'ramda'
 import { FeatureFlags } from './definitions'
 
 const X_FEATURE_FLAG = 'X-Feature-Flag'

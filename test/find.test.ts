@@ -3,7 +3,6 @@ import { event as eventByShopID } from './__mocks__/request-by-id.event'
 import { event as eventShopNotFound } from './__mocks__/request-by-id.event.not-found'
 import { event as eventWithFeatureFlag } from './__mocks__/request.with-feature-flag.event'
 import { find } from '../shops/find'
-import { logger } from '../shops/log';
 
 const sinon = require('sinon')
 
@@ -17,15 +16,14 @@ interface KopiResponse {
 }
 
 describe('find.endpoint.test', () => {
-
   beforeAll(() => {
-    sinon.stub(logger, 'error').returns();
-    sinon.stub(logger, 'info').returns();
+    // sinon.stub(logger, 'error').returns();
+    // sinon.stub(logger, 'info').returns();
   })
 
   afterAll(() => {
-    (logger.error as any).restore();
-    (logger.info as any).restore();
+    // (logger.error as any).restore();
+    // (logger.info as any).restore();
   })
 
   it('should return an array without test data', async () => {
