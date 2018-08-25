@@ -11,8 +11,8 @@ import {
 
 const { httpHeaderNormalizer, httpEventNormalizer } = require('middy/middlewares')
 
-import { getFeatureFlags, filterTestData } from './helpers'
-import { shops, findShop, Shop } from './shops'
+import { getFeatureFlags, filterTestData } from '../helpers'
+import { shops, findShop, Shop } from '../shops'
 import { getLogger, initLogger } from './log';
 
 const find = middy(async (event: APIGatewayEvent, context: Context) => {

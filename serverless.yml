@@ -46,7 +46,7 @@ provider:
 
 functions:
   find:
-    handler: shops/find.find
+    handler: functions/find/index.find
     events:
       - http:
           method: get

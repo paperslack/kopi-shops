@@ -2,7 +2,7 @@ import { event } from './__mocks__/request.event'
 import { event as eventByShopID } from './__mocks__/request-by-id.event'
 import { event as eventShopNotFound } from './__mocks__/request-by-id.event.not-found'
 import { event as eventWithFeatureFlag } from './__mocks__/request.with-feature-flag.event'
-import { find } from '../shops/find'
+import { find } from '../functions/find'
 
 const sinon = require('sinon')
 
